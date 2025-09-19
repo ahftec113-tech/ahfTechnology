@@ -44,8 +44,8 @@ const useOrderBrowserScreen = () => {
   const { getState } = useReduxStore();
   const { userData, token } = getState('Auth');
 
-  const [modalState, setModalState] = useState(null);
   const [tableArryData, setTableArryData] = useState(null);
+  const [modalState, setModalState] = useState(null);
 
   const [formState, setFormState] = useState({
     selectedDay: null,

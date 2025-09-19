@@ -1,16 +1,33 @@
-import { View, Text, Image } from 'react-native';
 import React, { memo } from 'react';
+import { View, Text, Image } from 'react-native';
 import ThemeButton from '../../Components/ThemeButton';
-import { afhLogo, logOutGray } from '../../Assets';
+import { afhLogo, logOutGray, trash } from '../../Assets';
 import { store } from '../../Redux/Reducer';
 import { logOutAuth } from '../../Redux/Action/AuthAction';
-import { styles } from './styles';
 import { TextComponent } from '../../Components/TextComponent';
+import { styles } from './styles';
+import { Touchable } from '../../Components/Touchable';
 import { hp, wp } from '../../Hooks/useResponsive';
+import useTableDataScreen from './useTableDataScreen';
 
-const TableDataScreen = () => {
+// Define dynamic keys you want to show in the card
+const headers = [
+  'POID',
+  'O.Code',
+  'PkgTracking',
+  'TrackingID',
+  'Order.Date',
+  'O.TWeight',
+];
+
+const TableDataScreen = ({ navigation, route }) => {
+  const { tableArryData, onCodePress, onLogPress } = useTableDataScreen(
+    navigation,
+    route,
+  );
   return (
     <View>
+      {/* Header Section */}
       <View style={styles.headerRow}>
         <Image source={afhLogo} resizeMode="contain" style={styles.logo} />
         <ThemeButton
@@ -22,31 +39,69 @@ const TableDataScreen = () => {
           onPress={() => store.dispatch(logOutAuth())}
         />
       </View>
-      <TextComponent text={'Selected Order'} styles={{ textAlign: 'center' }} />
+
+      {/* Title Section */}
       <TextComponent
-        text={'Total Result=2'}
-        styles={{ textAlign: 'center', marginTop: hp('1') }}
+        text={'Selected Order'}
+        styles={styles.selectedOrderText}
       />
-      {Object.entries({
-        'Item Total Cost': 'detailDat',
-        'Shipping Cost': 'detailData',
-        'Tax Cost': 'detailDat',
-        'Order Total Cost': 'detailDa',
-        'Item Total Selling': 'detailData',
-        'Shipping Charges': 'detailDat',
-        Tax: 'detailDat',
-        'Order Total Selling': 'detailD',
-      }).map(([key, value]) => (
-        <View style={styles.totalsRow} key={key}>
-          <Text style={styles.totalsText}>{key}</Text>
-          <Text style={styles.totalsValue}>{value}</Text>
+      <TextComponent
+        text={`Total Result=${tableArryData.length}`}
+        styles={styles.totalResultText}
+      />
+
+      {/* Dynamic Vertical Cards */}
+      {tableArryData.map((order, orderIndex) => (
+        <View key={orderIndex} style={styles.cardContainer}>
+          {headers.map((key, idx) => (
+            <View key={idx} style={styles.totalsRow}>
+              <Text style={styles.totalsText}>{key}</Text>
+
+              {key === 'Od.Log' ? (
+                <Touchable
+                  style={styles.logButton}
+                  onPress={() =>
+                    onLogPress({
+                      odid: order?.odid,
+                      order_id: order?.order_id,
+                    })
+                  }
+                >
+                  <Image
+                    source={trash}
+                    resizeMode="contain"
+                    style={styles.logIcon}
+                  />
+                </Touchable>
+              ) : key === 'O.Code' ? (
+                <Text
+                  style={styles.codeValue}
+                  onPress={() =>
+                    navigation.navigate('OrderDetailScreen', order?.OCode)
+                  }
+                >
+                  {order[key.replace('.', '')] || ''}
+                </Text>
+              ) : (
+                <Text style={styles.totalsValue}>
+                  {order[key.replace('.', '')] || ''}
+                </Text>
+              )}
+            </View>
+          ))}
+
+          <ThemeButton
+            title={'Show more'}
+            isTheme
+            style={styles.showMoreButton}
+            onPress={() =>
+              navigation.navigate('OrderListDetailScreen', [
+                tableArryData[orderIndex],
+              ])
+            }
+          />
         </View>
       ))}
-      <ThemeButton
-        title={'Show more'}
-        isTheme
-        style={{ width: wp('50'), alignSelf: 'center', marginTop: hp('2') }}
-      />
     </View>
   );
 };

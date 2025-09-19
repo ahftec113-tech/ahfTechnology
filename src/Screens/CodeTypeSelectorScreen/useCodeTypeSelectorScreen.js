@@ -49,48 +49,6 @@ const useCodeTypeSelectorScreen = ({ navigate }, { params }) => {
         rightIconColor: Colors.black,
         onPress: () => NavigationService.navigate('TypeCodeScreen'),
       },
-      {
-        title: `Order Code`,
-        rightIcon: arrRight,
-        rightIconColor: Colors.black,
-        onPress: () => NavigationService.navigate('TypeCodeScreen'),
-      },
-      {
-        title: `Supplier Name`,
-        rightIcon: arrRight,
-        rightIconColor: Colors.black,
-        onPress: () => NavigationService.navigate('TypeCodeScreen'),
-      },
-      {
-        title: `Tracking ID`,
-        rightIcon: arrRight,
-        rightIconColor: Colors.black,
-        onPress: () => NavigationService.navigate('TypeCodeScreen'),
-      },
-      {
-        title: `SKU`,
-        rightIcon: arrRight,
-        rightIconColor: Colors.black,
-        onPress: () => NavigationService.navigate('TypeCodeScreen'),
-      },
-      {
-        title: `Style`,
-        rightIcon: arrRight,
-        rightIconColor: Colors.black,
-        onPress: () => NavigationService.navigate('TypeCodeScreen'),
-      },
-      {
-        title: `Size`,
-        rightIcon: arrRight,
-        rightIconColor: Colors.black,
-        onPress: () => NavigationService.navigate('TypeCodeScreen'),
-      },
-      {
-        title: `Color`,
-        rightIcon: arrRight,
-        rightIconColor: Colors.black,
-        onPress: () => NavigationService.navigate('TypeCodeScreen'),
-      },
     ],
     orderDetail: [
       {

@@ -28,7 +28,6 @@ const headers = [
   'O.TWeight',
   'PrintDate',
 ];
-('OrderDetailScreen');
 
 const OrderTableComp = ({ arryData, onCodePress, onLogPress }) => {
   return (

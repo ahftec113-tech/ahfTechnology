@@ -3,7 +3,7 @@ import React, { memo } from 'react';
 import { HeaderComponent } from '../../Components/HeaderComp';
 import { hp, wp } from '../../Hooks/useResponsive';
 import { Colors } from '../../Theme/Variables';
-import { galleryYellow } from '../../Assets';
+import { cameraGray, galleryYellow } from '../../Assets';
 import ThemeButton from '../../Components/ThemeButton';
 import { Touchable } from '../../Components/Touchable';
 import NavigationService from '../../Services/NavigationService';
@@ -46,7 +46,7 @@ const TypeCodeScreen = () => {
           }
         >
           <Image
-            source={galleryYellow}
+            source={cameraGray}
             resizeMode="contain"
             style={{ width: wp('7'), height: hp('3') }}
           />

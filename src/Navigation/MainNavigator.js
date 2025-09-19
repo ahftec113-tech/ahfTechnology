@@ -55,6 +55,10 @@ function MainNavigator() {
               name="TableDataScreen"
               component={Screens.TableDataScreen}
             />
+            <Stack.Screen
+              name="OrderListDetailScreen"
+              component={Screens.OrderListDetailScreen}
+            />
             {/* <Stack.Screen name="WelcomeScreen" component={Screens.WelcomeScreen} />
         <Stack.Screen name="LoginScreen" component={Screens.LoginScreen} />
         <Stack.Screen

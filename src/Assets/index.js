@@ -86,6 +86,8 @@ export { default as arrowRight } from './Icons/arrowRight.png';
 
 export { default as clockOrange } from './Icons/clockOrange.png';
 
+export { default as cameraGray } from './Icons/cameraGray.png';
+
 export { default as bulkOrder } from './Icons/bulkOrder.png';
 export { default as ordeerDetail } from './Icons/ordeerDetail.png';
 export { default as orderByDate } from './Icons/orderByDate.png';
