@@ -1014,7 +1014,7 @@ const checkImageOrientation = imageUrl => {
 };
 // Example usage:
 
-function formatDateToYMD(dateStr) {
+function formatDateToMDY(dateStr) {
   // input "Mon Jul 14 2025";
 
   const date = new Date(dateStr);
@@ -1025,7 +1025,7 @@ function formatDateToYMD(dateStr) {
   const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
   const day = String(date.getDate()).padStart(2, '0');
 
-  return `${year}-${month}-${day}`;
+  return `${month}/${day}/${year}`;
 
   // output: "2025-07-14"
 }
@@ -1191,6 +1191,10 @@ const getUsedPercentage = (total, used) => {
   // ensures value stays between 0 and 100
 };
 
+function removeBrTag(str) {
+  return str.replace(/<br\s*\/?>/gi, '');
+}
+
 // Convert formatted string back into logRow object
 const parseLogString = str => {
   // Split by | and clean whitespace
@@ -1203,7 +1207,7 @@ const parseLogString = str => {
     LogType: `OrderStatusChanged | ${parts[0]}`, // add the prefix
     LogDate: parts[1] || '',
     UserName: parts[2] || '',
-    Reason: `[{"odid":"2635060"}] ${parts[3] || ''}`,
+    Reason: `${removeBrTag(parts[3] ?? '') || ''}`,
   };
 };
 
@@ -1256,7 +1260,7 @@ export {
   mergeIds,
   formatPrice,
   checkImageOrientation,
-  formatDateToYMD,
+  formatDateToMDY,
   formatDateToLong,
   getFormattedTime,
   getCustom12HourTime,

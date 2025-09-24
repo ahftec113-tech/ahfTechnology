@@ -48,6 +48,18 @@ function MainNavigator() {
               component={Screens.CodeTypeSelectorScreen}
             />
             <Stack.Screen
+              name="ListTableScreen"
+              component={Screens.ListTableScreen}
+            />
+            <Stack.Screen
+              name="FormDisplayScreen"
+              component={Screens.FormDisplayScreen}
+            />
+            <Stack.Screen
+              name="POIDDetailsScreen"
+              component={Screens.POIDDetailsScreen}
+            />
+            <Stack.Screen
               name="TypeCodeScreen"
               component={Screens.TypeCodeScreen}
             />

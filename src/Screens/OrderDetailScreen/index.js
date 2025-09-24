@@ -3,19 +3,39 @@ import { View, Text, ScrollView, FlatList } from 'react-native';
 import styles from './styles';
 import { orderDetail } from '../../Utils/localDB';
 import useOrderDetailScreen from './useOrderDetailScreen';
+import { hp, wp } from '../../Hooks/useResponsive';
+import ThemeButton from '../../Components/ThemeButton';
 
 const OrderDetailScreen = ({ navigation, route }) => {
-  const { detailData } = useOrderDetailScreen(navigation, route);
+  const { detailData, printFun } = useOrderDetailScreen(navigation, route);
 
   const { orderCode, note, generalInfo, customerInfo, products, totals } =
     orderDetail;
+
+  const headers = [
+    'prod_name',
+    'supplier_name',
+    'brands',
+    'qty',
+    'ship_qty',
+    'total_cost',
+    'itemPrice',
+    'pkgTracking',
+    'PostBackTracking',
+    'purchase_order_id',
+    'poCrtDate',
+    'order_state',
+    'slip_generated',
+  ];
 
   return (
     <ScrollView style={styles.container}>
       {/* Header */}
       <View style={styles.card}>
         <View style={styles.headerRow}>
-          <Text style={styles.orderCode}>OrderCode: {route?.params}</Text>
+          <Text style={styles.orderCode}>
+            OrderCode: {route?.params?.oCode}
+          </Text>
         </View>
         <Text style={styles.note}>{detailData?.PrintingLog}</Text>
       </View>
@@ -56,9 +76,76 @@ const OrderDetailScreen = ({ navigation, route }) => {
           </Text>
         ))}
       </View>
+      <View
+        style={{
+          width: wp('92.5'),
+          alignSelf: 'center',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          marginBottom: hp('2'),
+        }}
+      >
+        <ThemeButton
+          style={{ width: wp('30'), height: hp('5') }}
+          textStyle={{ fontSize: hp('1.5') }}
+          title={'Print Invoice '}
+          onPress={() => printFun('only_invoice_download_print')}
+        />
+        <ThemeButton
+          style={{ width: wp('30'), height: hp('5') }}
+          textStyle={{ fontSize: hp('1.5') }}
+          title={'Print Latest Labels'}
+          onPress={() => printFun('latest_lable_wd_pkg')}
+        />
+        <ThemeButton
+          style={{ width: wp('30'), height: hp('5') }}
+          textStyle={{ fontSize: hp('1.5') }}
+          title={'Print All Previous & Latest Labels'}
+          onPress={() => printFun('all_lables_wd_pkg')}
+        />
+      </View>
+
+      {/* Totals */}
+      <View style={styles.card}>
+        <Text style={styles.sectionTitle}>Order Totals</Text>
+        {Object.entries({
+          'Item Total Cost': detailData?.ReqstRspnse[0]?.item_cost,
+          'Shipping Cost': detailData?.ReqstRspnse[0]?.shipping_cost,
+          'Tax Cost': detailData?.ReqstRspnse[0]?.tax_cost,
+          'Order Total Cost': detailData?.ReqstRspnse[0]?.total_cost,
+          'Item Total Selling': detailData?.ReqstRspnse[0]?.total_amount,
+          'Shipping Charges':
+            detailData?.ReqstRspnse[0]?.total_shipping_charges,
+          Tax: detailData?.ReqstRspnse[0]?.tax,
+          'Order Total Selling': detailData?.ReqstRspnse[0]?.grand_total,
+        }).map(([key, value]) => (
+          <View style={styles.totalsRow} key={key}>
+            <Text style={styles.totalsText}>{key}</Text>
+            <Text style={styles.totalsValue}>{value}</Text>
+          </View>
+        ))}
+      </View>
+      <Text style={styles.sectionTitle}>Products</Text>
+      {detailData?.ReqstRspnse.map((order, orderIndex) => (
+        <View key={orderIndex} style={styles.cardContainer}>
+          {headers.map(
+            (key, idx) =>
+              order[key] != null && (
+                <View key={idx} style={styles.totalsRow}>
+                  <Text style={styles.totalsText}>{key}</Text>
+
+                  <Text style={styles.totalsValue}>
+                    {order[key.replace('.', '')] || ''}
+                  </Text>
+                </View>
+              ),
+          )}
+        </View>
+      ))}
 
       {/* Products Table */}
-      <View style={styles.card}>
+      {/* <View style={styles.card}>
         <Text style={styles.sectionTitle}>Products</Text>
         <View style={styles.tableHeader}>
           <Text style={styles.tableHeaderText}>ProdName</Text>
@@ -98,28 +185,7 @@ const OrderDetailScreen = ({ navigation, route }) => {
             </View>
           )}
         />
-      </View>
-
-      {/* Totals */}
-      <View style={styles.card}>
-        <Text style={styles.sectionTitle}>Order Totals</Text>
-        {Object.entries({
-          'Item Total Cost': detailData?.ReqstRspnse[0]?.item_cost,
-          'Shipping Cost': detailData?.ReqstRspnse[0]?.shipping_cost,
-          'Tax Cost': detailData?.ReqstRspnse[0]?.tax_cost,
-          'Order Total Cost': detailData?.ReqstRspnse[0]?.total_cost,
-          'Item Total Selling': detailData?.ReqstRspnse[0]?.total_amount,
-          'Shipping Charges':
-            detailData?.ReqstRspnse[0]?.total_shipping_charges,
-          Tax: detailData?.ReqstRspnse[0]?.tax,
-          'Order Total Selling': detailData?.ReqstRspnse[0]?.grand_total,
-        }).map(([key, value]) => (
-          <View style={styles.totalsRow} key={key}>
-            <Text style={styles.totalsText}>{key}</Text>
-            <Text style={styles.totalsValue}>{value}</Text>
-          </View>
-        ))}
-      </View>
+      </View> */}
     </ScrollView>
   );
 };

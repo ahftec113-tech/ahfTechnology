@@ -49,8 +49,10 @@
     "react-hook-form": "^7.61.1",
     "react-native": "0.80.2",
     "react-native-animatable": "^1.4.0",
+    "react-native-blob-util": "^0.22.2",
     "react-native-blurhash": "^2.1.1",
     "react-native-collapsible": "^1.6.2",
+    "react-native-date-picker": "^5.0.13",
     "react-native-fast-image": "^8.6.3",
     "react-native-flash-message": "^0.4.2",
     "react-native-fs": "^2.20.0",
@@ -64,6 +66,7 @@
     "react-native-mime-types": "^2.5.0",
     "react-native-modal": "^14.0.0-rc.1",
     "react-native-pager-view": "^6.9.1",
+    "react-native-pdf": "^6.7.7",
     "react-native-permissions": "^5.4.2",
     "react-native-qrcode-scanner": "^1.5.5",
     "react-native-reanimated": "~2.2.0",
@@ -82,6 +85,7 @@
     "redux": "^5.0.1",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^3.1.0",
+    "rn-fetch-blob": "^0.12.0",
     "yup": "^1.6.1"
   },
   "devDependencies": {

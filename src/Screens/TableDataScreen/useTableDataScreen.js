@@ -4,7 +4,12 @@ import API from '../../Utils/helperFunc';
 import { errorMessage, successMessage } from '../../Config/NotificationMessage';
 import { AuthUrl } from '../../Utils/Urls';
 import useReduxStore from '../../Hooks/UseReduxStore';
-import { parseLogString } from '../../Services/GlobalFunctions';
+import {
+  formatDateToDMY,
+  formatDateToMDY,
+  formatDateToYMD,
+  parseLogString,
+} from '../../Services/GlobalFunctions';
 
 const useTableDataScreen = ({ navigate }, { params }) => {
   const { getState } = useReduxStore();
@@ -19,8 +24,9 @@ const useTableDataScreen = ({ navigate }, { params }) => {
     onSuccess: ({ ok, data }) => {
       console.log('skldbvklbsdklvbklsdbvkbsdkvbsdbvklsdbvksd', data);
       if (ok) {
-        const setDataVal = data?.data.map(res => ({
-          POID: res?.purchase_order_id,
+        const dataValType = data?.data?.ReqstRspnse ?? data?.data;
+        const setDataVal = dataValType.map(res => ({
+          POID: res?.purchase_order_id ?? res?.POID,
           OCode: res?.order_code,
           OdQty: res?.qty,
           SpQty: res?.ship_qty,
@@ -35,13 +41,18 @@ const useTableDataScreen = ({ navigate }, { params }) => {
           OrderStatus: res?.order_state,
           POCreated: res?.po_created,
           OrderDate: res?.order_date,
-          Ocost: res?.ocost,
+          Ocost: res?.po_total_amount ?? res?.ocost,
           OShippingCost: res?.shipping_cost,
           OTotalSelling: res?.oTotalSelling,
           OTWeight: res?.total_weight_org,
           PrintDate: res?.isPrintedOcd,
           odid: res?.odid,
           order_id: res?.order_id,
+          CompanyName: res?.company_name,
+          PototalAmountArg: res?.po_total_amount_org,
+          SupplierName: res?.supplier_name,
+          User: params?.isDate ? data?.data?.purchaseOrderUser[res?.id] : null,
+          id: res?.id,
         }));
         setTableArryData(setDataVal);
         // dispatch({
@@ -95,9 +106,13 @@ const useTableDataScreen = ({ navigate }, { params }) => {
     () =>
       getOrders.mutate({
         p_order_code_v: params?.code,
-        rqst_ke_fntn_vl: 'order_browser_prnt_data',
+        rqst_ke_fntn_vl: params?.isDate
+          ? 'purchase_orders_list_view'
+          : 'order_browser_prnt_data',
         userLoginIDC: userData,
         userLoginToken: token,
+        purchase_order_list_start_date: formatDateToMDY(params?.startDate),
+        purchase_order_list_end_date: formatDateToMDY(params?.endDate),
       }),
     [],
   );
@@ -113,6 +128,7 @@ const useTableDataScreen = ({ navigate }, { params }) => {
         rqst_ke_fntn_vl: 'order_log_data_view',
       });
     },
+    isDate: params?.isDate,
     onSearch: () => {
       mutateAsync({
         p_order_code_v: params?.code,

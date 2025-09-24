@@ -52,16 +52,16 @@ const HomeScreen = ({ navigation }) => {
         isWhite
         imageStyle={styles.orderImage}
         style={styles.orderButton}
-        // onPress={() => navigation.navigate('OrderBrowserScreen')}
+        onPress={() => navigation.navigate('FormDisplayScreen')}
       />
-      <ThemeButton
+      {/* <ThemeButton
         title={'Purchase Order Browser'}
         image={purchaseOrder}
         isWhite
         imageStyle={styles.orderImage}
         style={styles.orderButton}
         // onPress={() => navigation.navigate('OrderBrowserScreen')}
-      />
+      /> */}
 
       {/* Touchable Navigate */}
       {/* <Touchable

@@ -41,7 +41,19 @@ const OrderListDetailScreen = ({ navigation, route }) => {
               <Text style={styles.totalsText}>{key}</Text>
 
               {key === 'Od.Log' ? (
-                <Touchable style={styles.logButton}>
+                <Touchable
+                  style={styles.logButton}
+                  onPress={() => {
+                    navigation.navigate('ListTableScreen', {
+                      headerArry: ['LogType', 'LogDate', 'UserName', 'Reason'],
+                      body: {
+                        or_log_odid: order?.odid,
+                        or_log_order_id: order?.order_id,
+                        rqst_ke_fntn_vl: 'order_log_data_view',
+                      },
+                    });
+                  }}
+                >
                   <Image
                     source={trash}
                     resizeMode="contain"

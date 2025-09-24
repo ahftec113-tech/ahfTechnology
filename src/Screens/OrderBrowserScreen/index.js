@@ -198,12 +198,10 @@ const OrderBrowserScreen = ({ navigation }) => {
         textStyle={styles.bulkOrderText}
         imageStyle={styles.bulkOrderImage}
         onPress={() =>
-          navigation.navigate('CodeTypeSelectorScreen', {
-            moduleType: 'byDate',
-          })
+          navigation.navigate('TypeCodeScreen', { isDateSelector: true })
         }
       />
-      <ThemeButton
+      {/* <ThemeButton
         title={'Show Purchase Order\nDetails'}
         isTransparent
         image={ordeerDetail}
@@ -230,7 +228,7 @@ const OrderBrowserScreen = ({ navigation }) => {
             moduleType: 'orderReport',
           })
         }
-      />
+      /> */}
 
       {/* <Accordion
         sections={SECTIONS}

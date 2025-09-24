@@ -1,14 +1,11 @@
 import { StyleSheet } from 'react-native';
 import { hp, wp } from '../../Hooks/useResponsive';
 
-export default StyleSheet.create({
+export const styles = StyleSheet.create({
   container: {
-    flexGrow: 1,
+    flex: 1,
     backgroundColor: '#f8f9fa',
-    // padding: 12,
-    paddingBottom: hp('50'),
-    paddingHorizontal: wp('2'),
-    marginTop: hp('1'),
+    padding: 12,
   },
   card: {
     backgroundColor: '#fff',
@@ -19,6 +16,8 @@ export default StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 6,
     elevation: 3,
+    width: wp('95'),
+    alignSelf: 'center',
   },
   headerRow: {
     flexDirection: 'row',
@@ -71,6 +70,30 @@ export default StyleSheet.create({
     textAlign: 'center',
     color: '#1e293b',
   },
+  totalsRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingVertical: 6,
+    borderBottomWidth: 1,
+    borderColor: '#e5e7eb',
+  },
+  totalsText: {
+    fontSize: 13,
+    color: '#1e293b',
+  },
+  totalsValue: {
+    fontWeight: 'bold',
+    fontSize: 13,
+    color: '#1e293b',
+  },
+  // Titles
+  selectedOrderText: {
+    textAlign: 'center',
+  },
+  totalResultText: {
+    textAlign: 'center',
+    marginTop: hp('1'),
+  },
 
   // Card Container
   cardContainer: {
@@ -107,5 +130,23 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     fontSize: hp('1.5'),
     color: '#1e293b',
+  },
+
+  // Special for clickable Code
+  codeValue: {
+    fontWeight: 'bold',
+    fontSize: hp('1.5'),
+    color: 'blue',
+    textDecorationLine: 'underline',
+  },
+
+  // Log Button
+  logButton: {
+    marginHorizontal: wp('2'),
+    alignSelf: 'center',
+  },
+  logIcon: {
+    width: wp('4'),
+    height: hp('3'),
   },
 });
