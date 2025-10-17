@@ -143,6 +143,7 @@ const TypeCodeScreen = ({ navigation, route }) => {
             isDate,
             startDate,
             endDate,
+            type: route?.params.type,
           })
         }
       />

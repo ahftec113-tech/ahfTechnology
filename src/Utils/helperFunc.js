@@ -230,13 +230,19 @@ const formDataFunc = async (url, body, fileKey, isArray) => {
   const { Auth } = store.getState();
   store.dispatch(loadingTrue());
 
-  // Normalize URI (Android/iOS safe)
   const normalizeUri = uri => {
     if (!uri) return uri;
-    return uri.startsWith('file://') ? uri : `file://${uri}`;
+
+    // 🚫 Fix malformed URIs like "file://content://..."
+    if (uri.startsWith('file://content://')) {
+      return uri.replace('file://', '');
+    }
+
+    if (uri.startsWith('content://')) return uri;
+    if (uri.startsWith('file://')) return uri;
+    return `file://${uri}`;
   };
 
-  // Convert only images to PNG
   const convertToPNG = async imageUri => {
     try {
       const fileExt = imageUri.split('.').pop().toLowerCase();
@@ -258,24 +264,28 @@ const formDataFunc = async (url, body, fileKey, isArray) => {
 
   const formData = new FormData();
 
-  // Handle multiple or single files
   const appendFile = async (value, keyName) => {
     if (!value?.uri) return;
 
     let finalUri = normalizeUri(value.uri);
     let mimeType =
       value.type || mime.lookup(finalUri) || 'application/octet-stream';
+    const fileExt =
+      value.name?.split('.').pop()?.toLowerCase() || mime.extension(mimeType);
 
-    // If it's an image, convert to PNG
+    // ✅ Handle image conversion only for images (not PDFs)
     if (mimeType.startsWith('image/')) {
-      finalUri = await convertToPNG(value.uri);
+      finalUri = value.uri;
       mimeType = 'image/png';
+    } else if (fileExt === 'pdf' || mimeType === 'application/pdf') {
+      // ✅ Properly handle PDF
+      mimeType = 'application/pdf';
     }
 
     formData.append(keyName, {
-      uri: normalizeUri(finalUri),
+      uri: finalUri,
       type: mimeType,
-      name: value.name || `${Date.now()}.${mime.extension(mimeType) || 'bin'}`,
+      name: value.name || `${Date.now()}.${fileExt || 'bin'}`,
     });
   };
 
@@ -287,7 +297,7 @@ const formDataFunc = async (url, body, fileKey, isArray) => {
     await appendFile(body[fileKey], fileKey);
   }
 
-  // Add other fields
+  // Add other form fields
   Object.entries(body).forEach(([key, value]) => {
     if (key !== fileKey) {
       if (Array.isArray(value)) {
@@ -304,15 +314,17 @@ const formDataFunc = async (url, body, fileKey, isArray) => {
     }
   });
 
+  console.log(
+    'kladsnklvnsdlkvnksdlnvlsdnlvnsdklvlkdsnvlsdnllkds',
+    JSON.stringify(formData),
+  );
+
   const requestOptions = {
     method: 'POST',
     headers: myHeaders,
     body: formData,
   };
-  console.log(
-    'kladsnklvnsdlkvnksdlnvlsdnlvnsdklvlkdsnvlsdnllkds',
-    JSON.stringify(formData),
-  );
+
   try {
     const response = await fetch(baseURL + url, requestOptions);
     const data = await response.json();
@@ -329,76 +341,98 @@ const formDataFuncForRealEstate = async (url, body) => {
   const { Auth } = store.getState();
   store.dispatch(loadingTrue());
 
-  // Normalize URI
+  // ✅ Normalize URI for React Native
   const normalizeUri = uri => {
     if (!uri) return uri;
-    return uri.startsWith('file://') ? uri : `file://${uri}`;
-  };
 
-  // Headers
+    // 🚫 Fix malformed URIs like "file://content://..."
+    if (uri.startsWith('file://content://')) {
+      return uri.replace('file://', '');
+    }
+
+    if (uri.startsWith('content://')) return uri;
+    if (uri.startsWith('file://')) return uri;
+    return `file://${uri}`;
+  };
+  // ✅ Headers (do NOT manually set Content-Type for FormData)
   const myHeaders = new Headers();
   myHeaders.append('Accept', 'application/json');
   myHeaders.append('Authorization', `Bearer ${Auth.token}`);
 
   const formData = new FormData();
 
-  // File append helper (no conversion, just raw file)
+  // ✅ Helper to append any file (image / pdf)
   const appendFile = async (value, keyName) => {
     if (!value?.uri) return;
 
-    let finalUri = normalizeUri(value.uri);
+    const finalUri = normalizeUri(value.uri);
     let mimeType =
-      value.type || mime.lookup(finalUri) || 'application/octet-stream';
+      value.type || mime.getType(finalUri) || 'application/octet-stream';
 
-    console.log('📂 Appending file:', keyName, finalUri);
+    // Force PDF type if name ends with .pdf
+    if (value.name?.toLowerCase().endsWith('.pdf')) {
+      mimeType = 'application/pdf';
+    }
+
+    // Fallback file name
+    const fileName =
+      value.name ||
+      `file_${Date.now()}.${mime.getExtension(mimeType) || 'bin'}`;
+
+    console.log('📂 Appending file:', keyName, finalUri, mimeType);
 
     formData.append(keyName, {
-      uri: normalizeUri(finalUri),
+      uri: finalUri,
       type: mimeType,
-      name: value.name || `${Date.now()}.${mime.extension(mimeType) || 'bin'}`,
+      name: fileName,
     });
   };
 
-  // 🔑 Handle multiple ads
+  // ✅ Handle ads (with images or pdf)
   if (Array.isArray(body.ads)) {
     for (const [adIndex, adObj] of body.ads.entries()) {
       for (const [key, value] of Object.entries(adObj)) {
         if (Array.isArray(value)) {
-          // Multiple images (parallel)
+          // Multiple files (images/pdfs)
           await Promise.all(
-            value.map((file, imgIndex) =>
-              appendFile(file, `ads[${adIndex}][${key}][${imgIndex}]`),
+            value.map((file, idx) =>
+              appendFile(file, `ads[${adIndex}][${key}][${idx}]`),
             ),
           );
         } else if (typeof value === 'object' && value?.uri) {
-          // Single file
+          // Single file (image/pdf)
           await appendFile(value, `ads[${adIndex}][${key}]`);
         } else {
-          // Normal field
+          // Normal fields
           formData.append(`ads[${adIndex}][${key}]`, value);
         }
       }
     }
   }
 
-  // 🔑 Add other fields (outside ads)
-  Object.entries(body).forEach(([key, value]) => {
+  // ✅ Handle other fields outside ads (including pdf/image attachments)
+  for (const [key, value] of Object.entries(body)) {
     if (key !== 'ads') {
       if (Array.isArray(value)) {
-        value.forEach((item, index) => {
-          formData.append(`${key}[${index}]`, item);
+        value.forEach((item, idx) => {
+          if (typeof item === 'object' && item?.uri) {
+            appendFile(item, `${key}[${idx}]`);
+          } else {
+            formData.append(`${key}[${idx}]`, item);
+          }
         });
-      } else if (typeof value === 'object' && value !== null) {
-        if (value.id !== undefined) {
-          formData.append(key, value.id);
-        }
+      } else if (typeof value === 'object' && value?.uri) {
+        // Single pdf/image outside ads (e.g. attachmentFileIncomment)
+        await appendFile(value, key);
+      } else if (typeof value === 'object' && value?.id !== undefined) {
+        formData.append(key, value.id);
       } else if (value !== undefined && value !== null) {
         formData.append(key, value);
       }
     }
-  });
+  }
 
-  // Debug print
+  // 📝 Debugging — shows total files appended
   let totalFiles = 0;
   for (let pair of formData.entries()) {
     console.log('📝', pair[0], pair[1]);
@@ -408,7 +442,7 @@ const formDataFuncForRealEstate = async (url, body) => {
 
   const requestOptions = {
     method: 'POST',
-    headers: myHeaders, // Content-Type ko mat set karo
+    headers: myHeaders,
     body: formData,
   };
 
@@ -422,7 +456,6 @@ const formDataFuncForRealEstate = async (url, body) => {
 
     console.log('📡 Response status:', response.status);
 
-    // Server response ko text ke roop me lo (debug ke liye)
     const text = await response.text();
     console.log('📡 Raw response:', text);
 

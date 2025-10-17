@@ -3,7 +3,8 @@ import { useState } from 'react';
 const useTypeCodeScreen = ({ navigate }, { params }) => {
   const currentDate = new Date();
   const isDate = params?.isDateSelector;
-  const [qrScan, setQrScan] = useState('112-9313437-9389018');
+  const [qrScan, setQrScan] = useState(null);
+  // const [qrScan, setQrScan] = useState('112-9313437-9389018');
   const [datePickerModal, setDatePickerModal] = useState(null);
   const [dateVal, setDateval] = useState({
     startDate: null,

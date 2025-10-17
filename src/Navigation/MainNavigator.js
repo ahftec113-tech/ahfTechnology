@@ -52,6 +52,11 @@ function MainNavigator() {
               component={Screens.ListTableScreen}
             />
             <Stack.Screen
+              name="PostIssueFormScreen"
+              component={Screens.PostIssueFormScreen}
+            />
+            <Stack.Screen name="ChatScreen" component={Screens.ChatScreen} />
+            <Stack.Screen
               name="FormDisplayScreen"
               component={Screens.FormDisplayScreen}
             />

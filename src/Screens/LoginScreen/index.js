@@ -62,7 +62,7 @@ const LoginScreen = ({ navigation }) => {
           styles={styles.signInText}
         />
         <TextComponent
-          text={'Enter you username and passwor to log in.'}
+          text={'Enter your username and password to log in.'}
           styles={{
             textAlign: 'center',
             marginTop: hp('2'),
@@ -77,7 +77,7 @@ const LoginScreen = ({ navigation }) => {
             reset,
             control,
             getValues,
-            placeholder: 'Enter Email',
+            placeholder: 'Enter email',
             //   isImage: sms,
             defaultValue: __DEV__ ? 'ahftec113@gmail.com' : '',
             viewStyle: { height: hp('5') },
@@ -93,7 +93,7 @@ const LoginScreen = ({ navigation }) => {
             reset,
             control,
             getValues,
-            placeholder: 'Password',
+            placeholder: 'Enter password',
             //   isImage: locksetting,
             defaultValue: __DEV__ ? 'Test@123' : '',
             isSecure: true,
@@ -103,13 +103,13 @@ const LoginScreen = ({ navigation }) => {
           }}
         />
 
-        <View style={styles.forgotContainer}>
+        {/* <View style={styles.forgotContainer}>
           <TextComponent
             text={'Forgot Password?'}
             styles={styles.forgetText}
             onPress={() => navigation.navigate('ForgotPasswordScreen')}
           />
-        </View>
+        </View> */}
 
         <View style={styles.buttonRow}>
           <ThemeButton

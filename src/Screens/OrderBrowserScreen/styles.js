@@ -26,16 +26,19 @@ export const styles = StyleSheet.create({
   //
 
   timeZoneContainer: {
-    width: wp('80'),
+    width: wp('75'),
     alignSelf: 'center',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     flexDirection: 'row',
   },
   timeZoneButton: {
-    width: wp('30'),
-    alignSelf: 'center',
+    width: wp('35'),
+    // alignSelf: 'center',
     borderWidth: 0,
     borderRadius: 50,
+    height: 'auto',
+    paddingVertical: hp('0.5'),
+    // paddingHorizontal: wp('2'),
   },
   bulkOrderButton: {
     width: wp('90'),

@@ -1,7 +1,7 @@
 //  Images
 
 export { default as splash } from './Images/splash.png';
-export { default as splash2 } from './Images/realStateShopSplash.png';
+export { default as splash2 } from './Images/AHFSplash.png';
 export { default as splashOne } from './Images/splashOne.png';
 export { default as splashTwo } from './Images/splashTwo.png';
 export { default as splashThree } from './Images/splashThree.png';
@@ -83,6 +83,13 @@ export { default as plusWhite } from './Icons/plusWhite.png';
 export { default as cardSend } from './Icons/cardSend.png';
 export { default as cardReceive } from './Icons/cardReceive.png';
 export { default as arrowRight } from './Icons/arrowRight.png';
+
+export { default as radioFill } from './Icons/radioFill.png';
+export { default as radioEmpty } from './Icons/radioEmpty.png';
+
+export { default as attachmentIcon } from './Icons/attachmentIcon.png';
+export { default as cameraIcon } from './Icons/cameraIcon.png';
+export { default as sendIcon } from './Icons/sendIcon.png';
 
 export { default as clockOrange } from './Icons/clockOrange.png';
 

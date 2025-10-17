@@ -39,6 +39,8 @@ export const MultiSelectButton = ({
           item?.label ??
           item?.area_name ??
           item?.sqYd ??
+          item?.supplier_name ??
+          item?.val ??
           item
         }
         style={{
@@ -112,7 +114,7 @@ export const MultiSelectButton = ({
           fontSize: textSize ? hp(textSize) : hp('1.5'),
         }}
         image={item?.image}
-        isDisable={isDisable}
+        isDisable={item?.disabled ?? isDisable}
         topImgStyles={{
           ...styles.imageStyle(
             isMultipule

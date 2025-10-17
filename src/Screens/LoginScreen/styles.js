@@ -123,11 +123,12 @@ export const styles = StyleSheet.create({
     // marginTop: hp('8'),
     alignItems: 'center',
     // paddingBottom: hp('2'),
-    position: 'absolute',
+    // position: 'absolute',
     // marginTop: hp('5'),
     left: 0,
     right: 0,
     bottom: hp('2'),
+    top: hp('32'),
   },
   dontHaveText: {
     fontSize: hp('1.5'),

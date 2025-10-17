@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import API from '../../Utils/helperFunc';
 import { errorMessage, successMessage } from '../../Config/NotificationMessage';
 import { AuthUrl } from '../../Utils/Urls';
@@ -47,10 +47,33 @@ const useOrderBrowserScreen = () => {
   const [tableArryData, setTableArryData] = useState(null);
   const [modalState, setModalState] = useState(null);
 
+  const [chicagoTime, setChicagoTime] = useState('');
+  const [karachiTime, setKarachiTime] = useState('');
+
+  useEffect(() => {
+    const updateTimes = () => {
+      const now = new Date();
+      const chicago = now.toLocaleTimeString('en-US', {
+        timeZone: 'America/Chicago',
+      });
+      const karachi = now.toLocaleTimeString('en-US', {
+        timeZone: 'Asia/Karachi',
+      });
+      setChicagoTime(chicago);
+      setKarachiTime(karachi);
+    };
+
+    updateTimes(); // run immediately on mount
+    const interval = setInterval(updateTimes, 1000);
+
+    return () => clearInterval(interval); // cleanup on unmount
+  }, []);
+
   const [formState, setFormState] = useState({
     selectedDay: null,
     selectedfield: null,
-    orderNumber: '112-9313437-9389018',
+    orderNumber: null,
+    // orderNumber: '112-9313437-9389018',
   });
   const { orderNumber, selectedDay, selectedfield } = formState;
 
@@ -119,29 +142,6 @@ const useOrderBrowserScreen = () => {
         parseLogString(data?.data),
       );
       if (ok) {
-        // const setDataVal = data?.data.map(res => ({
-        //   POID: res?.purchase_order_id,
-        //   OCode: res?.order_code,
-        //   OdQty: res?.qty,
-        //   SpQty: res?.ship_qty,
-        //   PkgTracking: res?.PostBackTracking,
-        //   TrackingID: res?.tracking_id,
-        //   FLBy: res?.ful_by_avail_stk,
-        //   Sku: res?.sku,
-        //   UPC: res?.upc,
-        //   Style: res?.style,
-        //   Size: res?.size,
-        //   Color: res?.color,
-        //   OrderStatus: res?.order_state,
-        //   POCreated: res?.po_created,
-        //   OrderDate: res?.order_date,
-        //   Ocost: res?.ocost,
-        //   OShippingCost: res?.shipping_cost,
-        //   OTotalSelling: res?.oTotalSelling,
-        //   OTWeight: res?.total_weight_org,
-        //   PrintDate: res?.isPrintedOcd,
-        // }));
-        // setTableArryData(setDataVal);
       } else errorMessage(data?.message);
     },
     onError: e => errorMessage(e),
@@ -157,6 +157,8 @@ const useOrderBrowserScreen = () => {
     selectedfield,
     arrySelector,
     tableArryData,
+    chicagoTime,
+    karachiTime,
     onLogPress: ({ odid, order_id }) => {
       mutate({
         userLoginIDC: userData,

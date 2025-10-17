@@ -24,5 +24,7 @@ export { default as OrderListDetailScreen } from './OrderListDetailScreen';
 export { default as POIDDetailsScreen } from './POIDDetailsScreen';
 export { default as ListTableScreen } from './ListTableScreen';
 export { default as FormDisplayScreen } from './FormDisplayScreen';
+export { default as ChatScreen } from './ChatScreen';
+export { default as PostIssueFormScreen } from './PostIssueFormScreen';
 
 export { default as ListViewScreen } from '../Components/ListViewComp';

@@ -113,6 +113,7 @@ const useTableDataScreen = ({ navigate }, { params }) => {
         userLoginToken: token,
         purchase_order_list_start_date: formatDateToMDY(params?.startDate),
         purchase_order_list_end_date: formatDateToMDY(params?.endDate),
+        p_order_val_type: params?.type,
       }),
     [],
   );

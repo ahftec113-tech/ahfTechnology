@@ -67,7 +67,12 @@ const BtnModalComponent = ({
       // Filter the masterDataSource and update FilteredDataSource
       const newData = allData.filter(function (item) {
         // Applying filter for the inserted text in search bar
-        const itemData = (item.name || '').toUpperCase();
+        const itemData = (
+          item.name ||
+          item?.supplier_name ||
+          item?.val ||
+          ''
+        ).toUpperCase();
         const textData = text.toUpperCase();
         return itemData.indexOf(textData) > -1;
       });
@@ -92,9 +97,7 @@ const BtnModalComponent = ({
         animationOutTiming={100}
         avoidKeyboard
         animationType="fade"
-        onBackButtonPress={
-          firstHit && activeTags.length == 0 ? onPress : onBackPress
-        }
+        onBackButtonPress={onBackPress}
         style={styles.bottomModal}
       >
         <View
@@ -150,7 +153,9 @@ const BtnModalComponent = ({
                 selectedAlter={selectedBtn ?? null}
                 isPrimaryColorStyle
                 onSelectVal={(objId, item) => {
-                  onChangeVal('selectedBtn', item);
+                  if (selectedBtn?.id == item?.id) {
+                    onChangeVal('selectedBtn', null);
+                  } else onChangeVal('selectedBtn', item);
                 }}
               />
             </ScrollView>

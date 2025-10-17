@@ -1211,6 +1211,24 @@ const parseLogString = str => {
   };
 };
 
+function getUrlType(url) {
+  if (url) {
+    // Convert URL to lowercase and extract the file extension
+    const extension = url.toLowerCase().split('.').pop();
+
+    // Check for common image extensions
+    const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp'];
+
+    if (extension === 'pdf') {
+      return 'pdf';
+    } else if (imageExtensions.includes(extension)) {
+      return 'image';
+    } else {
+      return 'unknown';
+    }
+  }
+}
+
 export {
   getSingleCharacter,
   getProperLocation,
@@ -1276,4 +1294,5 @@ export {
   getFileExtension,
   getUsedPercentage,
   parseLogString,
+  getUrlType,
 };

@@ -19,6 +19,7 @@ const ThemeButton = ({
   topImgStyles,
   isWhite,
   isRight,
+  numberOfLine,
 }) => {
   const topImgStyle = {
     alignItems: 'center',
@@ -71,6 +72,7 @@ const ThemeButton = ({
         />
       )}
       <Text
+        numberOfLines={numberOfLine}
         style={[
           styles.text,
           {

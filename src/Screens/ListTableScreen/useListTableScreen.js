@@ -19,7 +19,7 @@ const useListTableScreen = ({ params }) => {
     });
   }
 
-  const [tableArryData, setTableArryData] = useState([]);
+  const [tableArryData, setTableArryData] = useState(null);
   const getOrders = useMutation({
     mutationFn: data => {
       console.log('lksdbbvklsdbklvbkdsbvlkdbvksdbklvkds', params?.body);
@@ -43,9 +43,16 @@ const useListTableScreen = ({ params }) => {
             : [parseLogString(data?.data)],
           params?.headerArry,
         );
+        console.log(
+          'dataValTypedataValTypedataValTypedataValTypedataValTypedataValType',
+          dataValType,
+        );
 
         setTableArryData(dataValType);
-      } else errorMessage(data?.message);
+      } else {
+        setTableArryData(null);
+        // errorMessage(data?.message);
+      }
     },
     onError: e => errorMessage(e),
   });

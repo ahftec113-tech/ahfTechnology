@@ -45,6 +45,8 @@ const OrderBrowserScreen = ({ navigation }) => {
     onSearch,
     tableArryData,
     onLogPress,
+    chicagoTime,
+    karachiTime,
   } = useOrderBrowserScreen();
 
   const SECTIONS = [
@@ -162,13 +164,13 @@ const OrderBrowserScreen = ({ navigation }) => {
       />
       <View style={styles.timeZoneContainer}>
         <ThemeButton
-          title={'Time Zone'}
+          title={`Karachi Time:\n${karachiTime}`}
           isTheme
           isDisable
           style={styles.timeZoneButton}
         />
         <ThemeButton
-          title={'Time Zone'}
+          title={`Chicago Time:\n${chicagoTime}`}
           isTheme
           isDisable
           style={styles.timeZoneButton}
