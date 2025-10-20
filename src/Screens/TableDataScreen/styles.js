@@ -67,6 +67,8 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: hp('1.5'),
     color: '#1e293b',
+    width: wp('50'),
+    textAlign: 'right',
   },
 
   // Special for clickable Code
@@ -83,8 +85,11 @@ export const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   logIcon: {
-    width: wp('4'),
+    width: wp('10'),
     height: hp('3'),
+    alignSelf: 'flex-end',
+    // backgroundColor: 'red',
+    right: hp('-2.5'),
   },
 
   // Show more Button

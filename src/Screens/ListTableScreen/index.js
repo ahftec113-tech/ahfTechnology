@@ -15,40 +15,41 @@ const ListTableScreen = ({ route }) => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: hp('40') }}
       >
-        {tableArryData ? (
-          tableArryData.map((order, orderIndex) => (
-            <View key={orderIndex} style={styles.cardContainer}>
-              {headerArry.map(
-                (key, idx) =>
-                  order[key] != null && (
-                    <View key={idx} style={styles.totalsRow}>
-                      <Text style={styles.totalsText}>{key}</Text>
+        {tableArryData &&
+          (tableArryData.length > 0 ? (
+            tableArryData.map((order, orderIndex) => (
+              <View key={orderIndex} style={styles.cardContainer}>
+                {headerArry.map(
+                  (key, idx) =>
+                    order[key] != null && (
+                      <View key={idx} style={styles.totalsRow}>
+                        <Text style={styles.totalsText}>{key}</Text>
 
-                      <Text style={styles.totalsValue} numberOfLines={2}>
-                        {order[key.replace('.', '')].toString() || ''}
-                      </Text>
-                    </View>
-                  ),
-              )}
+                        <Text style={styles.totalsValue} numberOfLines={2}>
+                          {order[key.replace('.', '')].toString() || ''}
+                        </Text>
+                      </View>
+                    ),
+                )}
+              </View>
+            ))
+          ) : (
+            <View
+              style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+                alignContent: 'center',
+              }}
+            >
+              <TextComponent
+                text={'No Data Found'}
+                isThemeColor
+                family={'bold'}
+                size={'3'}
+              />
             </View>
-          ))
-        ) : (
-          <View
-            style={{
-              flex: 1,
-              justifyContent: 'center',
-              alignItems: 'center',
-              alignContent: 'center',
-            }}
-          >
-            <TextComponent
-              text={'No Data Found'}
-              isThemeColor
-              family={'bold'}
-              size={'3'}
-            />
-          </View>
-        )}
+          ))}
       </ScrollView>
     </View>
   );

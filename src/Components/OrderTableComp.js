@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, ScrollView, StyleSheet, Image } from 'react-native';
 import { orders } from './data';
 import { Touchable } from './Touchable';
-import { trash } from '../Assets';
+import { logIcon, trash } from '../Assets';
 import { hp, wp } from '../Hooks/useResponsive';
 
 const headers = [
@@ -58,7 +58,7 @@ const OrderTableComp = ({ arryData, onCodePress, onLogPress }) => {
                     }
                   >
                     <Image
-                      source={trash}
+                      source={logIcon}
                       resizeMode="contain"
                       style={{ width: wp('4'), height: hp('3') }}
                     />

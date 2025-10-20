@@ -62,7 +62,7 @@ const LoginScreen = ({ navigation }) => {
           styles={styles.signInText}
         />
         <TextComponent
-          text={'Enter your username and password to log in.'}
+          text={'Enter your email and password to log in.'}
           styles={{
             textAlign: 'center',
             marginTop: hp('2'),

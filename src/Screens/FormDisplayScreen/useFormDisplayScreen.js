@@ -79,7 +79,7 @@ const useFormDisplayScreen = () => {
 
   const onSearch = () => {
     console.log('kksdvnksndvnsdnvkds', {
-      after_ftm_lg: 'afterFirstQueries',
+      after_ftm_lg: 'after_ftm_lg',
       showParentIssueByStatusAjax: apiFormData?.statusOptions?.id ?? 5,
       // parentPostPagingAjax :"50",
       ViewByDatRangeStartDate: apiFormData?.startDate
@@ -93,12 +93,14 @@ const useFormDisplayScreen = () => {
       ViewByissueInToSrch: apiFormData?.issueText ?? null,
       ViewBysrchInQueryToSrch: apiFormData?.searchQuery ?? null,
       ViewBysearchByOffice: apiFormData?.officeOptions?.id ?? null,
-      ViewBySearchByPostedUSer: apiFormData?.UserList?.id ?? null,
+      ViewBySearchByPostedUSer: apiFormData?.UserList?.id ?? '',
       OrdersPerPage: 1,
+      rqst_ke_fntn_vl: 'issue_forum_parent_list_show',
+      parentPostPagingAjax: 30 ?? null,
     });
 
     mutate({
-      after_ftm_lg: 'afterFirstQueries',
+      after_ftm_lg: 'after_ftm_lg',
       showParentIssueByStatusAjax: apiFormData?.statusOptions?.id ?? 5,
       // parentPostPagingAjax :"50",
       ViewByDatRangeStartDate: apiFormData?.startDate
@@ -112,8 +114,11 @@ const useFormDisplayScreen = () => {
       ViewByissueInToSrch: apiFormData?.issueText ?? null,
       ViewBysrchInQueryToSrch: apiFormData?.searchQuery ?? null,
       ViewBysearchByOffice: apiFormData?.officeOptions?.id ?? null,
-      ViewBySearchByPostedUSer: apiFormData?.UserList?.id ?? null,
+      ViewBySearchByPostedUSer: apiFormData?.UserList?.id ?? '',
+      parentPostPagingAjax: 30 ?? null,
       OrdersPerPage: 1,
+
+      rqst_ke_fntn_vl: 'issue_forum_parent_list_show',
     });
   };
   useEffect(mutate, []);
@@ -138,8 +143,12 @@ const useFormDisplayScreen = () => {
 
   const selectTag = {
     SuppliersDetail: apiFormData?.SuppliersDetail,
-    officeOptions: apiFormData?.officeOptions,
-    IssuetypeOptions: apiFormData?.IssuetypeOptions,
+    officeOptions: apiFormData?.officeOptions?.id
+      ? apiFormData?.officeOptions
+      : arrySelector?.officeOptions[0],
+    IssuetypeOptions: apiFormData?.IssuetypeOptions?.id
+      ? apiFormData?.IssuetypeOptions
+      : arrySelector?.IssuetypeOptions[0],
     statusOptions: apiFormData?.statusOptions,
     startDate: apiFormData?.startDate,
     endDate: apiFormData?.endDate,

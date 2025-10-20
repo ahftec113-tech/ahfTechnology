@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { View, Text, Image, ScrollView } from 'react-native';
 import ThemeButton from '../../Components/ThemeButton';
-import { afhLogo, logOutGray, trash } from '../../Assets';
+import { afhLogo, logIcon, logOutGray, trash } from '../../Assets';
 import { store } from '../../Redux/Reducer';
 import { logOutAuth } from '../../Redux/Action/AuthAction';
 import { TextComponent } from '../../Components/TextComponent';
@@ -52,7 +52,7 @@ const TableDataScreen = ({ navigation, route }) => {
         styles={styles.selectedOrderText}
       />
       <TextComponent
-        text={`Total Result=${tableArryData.length}`}
+        text={`Total Result=${tableArryData?.length ?? ''}`}
         styles={styles.totalResultText}
       />
 
@@ -61,81 +61,85 @@ const TableDataScreen = ({ navigation, route }) => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: hp('40') }}
       >
-        {tableArryData.map((order, orderIndex) => (
-          <View key={orderIndex} style={styles.cardContainer}>
-            {headers.map(
-              (key, idx) =>
-                order[key] != null && (
-                  <View key={idx} style={styles.totalsRow}>
-                    <Text style={styles.totalsText}>{key}</Text>
+        {tableArryData &&
+          tableArryData.map((order, orderIndex) => (
+            <View key={orderIndex} style={styles.cardContainer}>
+              {headers.map(
+                (key, idx) =>
+                  order[key] != null && (
+                    <View key={idx} style={styles.totalsRow}>
+                      <Text style={styles.totalsText}>{key}</Text>
 
-                    {key === 'Od.Log' ? (
-                      <Touchable
-                        style={styles.logButton}
-                        onPress={() => {
-                          // onLogPress({
-                          //   odid: order?.odid,
-                          //   order_id: order?.order_id,
-                          // })
+                      {key === 'Od.Log' ? (
+                        <Touchable
+                          style={styles.logButton}
+                          onPress={() => {
+                            // onLogPress({
+                            //   odid: order?.odid,
+                            //   order_id: order?.order_id,
+                            // })
 
-                          navigation.navigate('ListTableScreen', {
-                            headerArry: [
-                              'LogType',
-                              'LogDate',
-                              'UserName',
-                              'Reason',
-                            ],
-                            body: {
-                              or_log_odid: order?.odid,
-                              or_log_order_id: order?.order_id,
-                              rqst_ke_fntn_vl: 'order_log_data_view',
-                            },
-                          });
-                        }}
-                      >
-                        <Image
-                          source={trash}
-                          resizeMode="contain"
-                          style={styles.logIcon}
-                        />
-                      </Touchable>
-                    ) : key === 'OCode' || (isDate && key == 'POID') ? (
-                      <Text
-                        style={styles.codeValue}
-                        onPress={() => {
-                          if (isDate)
-                            navigation.navigate('POIDDetailsScreen', order?.id);
-                          else
-                            navigation.navigate('OrderDetailScreen', {
-                              oCode: order?.OCode,
-                              orderId: order?.order_id,
+                            navigation.navigate('ListTableScreen', {
+                              headerArry: [
+                                'LogType',
+                                'LogDate',
+                                'UserName',
+                                'Reason',
+                              ],
+                              body: {
+                                or_log_odid: order?.odid,
+                                or_log_order_id: order?.order_id,
+                                rqst_ke_fntn_vl: 'order_log_data_view',
+                              },
                             });
-                        }}
-                      >
-                        {order[key.replace('.', '')] || ''}
-                      </Text>
-                    ) : (
-                      <Text style={styles.totalsValue}>
-                        {order[key.replace('.', '')] || ''}
-                      </Text>
-                    )}
-                  </View>
-                ),
-            )}
-            {!isDate && (
-              <ThemeButton
-                title={'Show more'}
-                isTheme
-                style={styles.showMoreButton}
-                onPress={() =>
-                  navigation.navigate('OrderListDetailScreen', [
-                    tableArryData[orderIndex],
-                  ])
-                }
-              />
-            )}
-          </View>
-        ))}
+                          }}
+                        >
+                          <Image
+                            source={logIcon}
+                            resizeMode="contain"
+                            style={styles.logIcon}
+                          />
+                        </Touchable>
+                      ) : key === 'OCode' || (isDate && key == 'POID') ? (
+                        <Text
+                          style={styles.codeValue}
+                          onPress={() => {
+                            if (isDate)
+                              navigation.navigate(
+                                'POIDDetailsScreen',
+                                order?.id,
+                              );
+                            else
+                              navigation.navigate('OrderDetailScreen', {
+                                oCode: order?.OCode,
+                                orderId: order?.order_id,
+                              });
+                          }}
+                        >
+                          {order[key.replace('.', '')] || ''}
+                        </Text>
+                      ) : (
+                        <Text style={styles.totalsValue} numberOfLines={5}>
+                          {order[key.replace('.', '')] || ''}
+                        </Text>
+                      )}
+                    </View>
+                  ),
+              )}
+              {!isDate && (
+                <ThemeButton
+                  title={'Show more'}
+                  isTheme
+                  style={styles.showMoreButton}
+                  onPress={() =>
+                    navigation.navigate('OrderListDetailScreen', [
+                      tableArryData[orderIndex],
+                    ])
+                  }
+                />
+              )}
+            </View>
+          ))}
       </ScrollView>
     </View>
   );

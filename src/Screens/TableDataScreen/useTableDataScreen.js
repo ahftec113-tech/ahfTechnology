@@ -15,7 +15,7 @@ const useTableDataScreen = ({ navigate }, { params }) => {
   const { getState } = useReduxStore();
   const { userData, token } = getState('Auth');
 
-  const [tableArryData, setTableArryData] = useState([]);
+  const [tableArryData, setTableArryData] = useState(null);
   const getOrders = useMutation({
     mutationFn: data => {
       console.log('lksdbbvklsdbklvbkdsbvlkdbvksdbklvkds', data);

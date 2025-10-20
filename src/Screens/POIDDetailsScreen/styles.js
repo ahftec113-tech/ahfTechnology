@@ -146,7 +146,10 @@ export const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   logIcon: {
-    width: wp('4'),
+    width: wp('10'),
     height: hp('3'),
+    alignSelf: 'flex-end',
+    // backgroundColor: 'red',
+    right: hp('-2.5'),
   },
 });

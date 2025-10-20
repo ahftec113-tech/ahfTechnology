@@ -4,7 +4,7 @@ import { Colors } from '../../Theme/Variables';
 
 const useCodeTypeSelectorScreen = ({ navigate }, { params }) => {
   const title = {
-    byBulk: 'Purchase Order By Order\n/Skus/PIDs',
+    byBulk: 'Show Orders And\nPurchase Orders',
     byDate: 'Purchase Order By\nOrder Date',
     orderDetail: 'Purchase Order Details',
   };
@@ -16,7 +16,10 @@ const useCodeTypeSelectorScreen = ({ navigate }, { params }) => {
         rightIcon: arrRight,
         rightIconColor: Colors.black,
         onPress: () =>
-          NavigationService.navigate('TypeCodeScreen', { type: 'order_code' }),
+          NavigationService.navigate('TypeCodeScreen', {
+            type: 'order_code',
+            title: title[params?.moduleType],
+          }),
       },
       {
         title: `Purchase Order`,
@@ -25,6 +28,7 @@ const useCodeTypeSelectorScreen = ({ navigate }, { params }) => {
         onPress: () =>
           NavigationService.navigate('TypeCodeScreen', {
             type: 'purchase_order_id',
+            title: title[params?.moduleType],
           }),
       },
     ],

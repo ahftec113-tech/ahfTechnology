@@ -11,6 +11,7 @@ import useTypeCodeScreen from './useTypeCodeScreen';
 import DatePicker from 'react-native-date-picker';
 import { formatDateToLong } from '../../Services/GlobalFunctions';
 import { TextComponent } from '../../Components/TextComponent';
+import { errorMessage } from '../../Config/NotificationMessage';
 
 const TypeCodeScreen = ({ navigation, route }) => {
   const {
@@ -28,7 +29,11 @@ const TypeCodeScreen = ({ navigation, route }) => {
 
   return (
     <View>
-      <HeaderComponent headerTitle={''} isBack />
+      <HeaderComponent
+        headerTitle={route?.params?.title}
+        isBack
+        numberOfLines={3}
+      />
 
       {isDate ? (
         <>
@@ -137,15 +142,17 @@ const TypeCodeScreen = ({ navigation, route }) => {
         isTheme
         style={{ width: wp('90'), alignSelf: 'center', marginTop: hp('5') }}
         title={'Continue'}
-        onPress={() =>
-          NavigationService.navigate('TableDataScreen', {
-            code: qrScan,
-            isDate,
-            startDate,
-            endDate,
-            type: route?.params.type,
-          })
-        }
+        onPress={() => {
+          if (qrScan != '' && qrScan != null) {
+            NavigationService.navigate('TableDataScreen', {
+              code: qrScan,
+              isDate,
+              startDate,
+              endDate,
+              type: route?.params.type,
+            });
+          } else errorMessage('Please type something');
+        }}
       />
 
       <DatePicker

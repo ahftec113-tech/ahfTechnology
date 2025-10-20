@@ -49,7 +49,7 @@ const DraftAdScreen = ({ navigation, route }) => {
         keyExtractor={keyExtractor}
         renderItem={renderItem}
         contentContainerStyle={styles.flatListContainer}
-        data={projectsList}
+        data={projectsList ?? []}
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
         ListEmptyComponent={

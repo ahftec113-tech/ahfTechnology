@@ -5,6 +5,7 @@ import { orderDetail } from '../../Utils/localDB';
 import useOrderDetailScreen from './useOrderDetailScreen';
 import { hp, wp } from '../../Hooks/useResponsive';
 import ThemeButton from '../../Components/ThemeButton';
+import { HeaderComponent } from '../../Components/HeaderComp';
 
 const OrderDetailScreen = ({ navigation, route }) => {
   const { detailData, printFun } = useOrderDetailScreen(navigation, route);
@@ -30,6 +31,7 @@ const OrderDetailScreen = ({ navigation, route }) => {
 
   return (
     <ScrollView style={styles.container}>
+      <HeaderComponent isBack headerTitle={''} />
       {/* Header */}
       <View style={styles.card}>
         <View style={styles.headerRow}>
@@ -52,6 +54,7 @@ const OrderDetailScreen = ({ navigation, route }) => {
           ).toString(),
           'Total Weight':
             detailData?.ReqstRspnse[0]?.total_weight_org + ' (oz)',
+          PO: detailData?.ReqstRspnse[0]?.order_code,
         }).map(([key, value]) => (
           <Text key={key} style={styles.infoText}>
             {key}: {value}
@@ -131,7 +134,9 @@ const OrderDetailScreen = ({ navigation, route }) => {
         <View key={orderIndex} style={styles.cardContainer}>
           {headers.map(
             (key, idx) =>
-              order[key] != null && (
+              order[key] != null &&
+              order[key] != undefined &&
+              order[key] != '' && (
                 <View key={idx} style={styles.totalsRow}>
                   <Text style={styles.totalsText}>{key}</Text>
 

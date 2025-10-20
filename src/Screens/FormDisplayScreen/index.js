@@ -26,7 +26,10 @@ import useFormDisplayScreen from './useFormDisplayScreen';
 import { hp, wp } from '../../Hooks/useResponsive';
 import BtnModalComponent from '../../Components/BtnModalComp';
 import DatePicker from 'react-native-date-picker';
-import { formatDateToLong } from '../../Services/GlobalFunctions';
+import {
+  formatDateToLong,
+  formatDateToMDY,
+} from '../../Services/GlobalFunctions';
 import { Colors } from '../../Theme/Variables';
 import RenderHTML from 'react-native-render-html';
 
@@ -191,7 +194,7 @@ const FormDisplayScreen = ({ navigation }) => {
               isTransparent
               title={
                 apiFormData?.startDate
-                  ? formatDateToLong(apiFormData?.startDate)
+                  ? formatDateToMDY(apiFormData?.startDate)
                   : apiAllData?.StartDate
               }
               image={calendar}
@@ -203,7 +206,7 @@ const FormDisplayScreen = ({ navigation }) => {
             <ThemeButton
               title={
                 apiFormData?.endDate
-                  ? formatDateToLong(apiFormData?.endDate)
+                  ? formatDateToMDY(apiFormData?.endDate)
                   : apiAllData?.EndDate
               }
               isTransparent

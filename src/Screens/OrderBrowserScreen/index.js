@@ -178,7 +178,7 @@ const OrderBrowserScreen = ({ navigation }) => {
       </View>
 
       <ThemeButton
-        title={'Show Purchase Order\nBy Bulk Orders/Skus/PIDs'}
+        title={'Show Orders And\nPurchase Orders'}
         isTransparent
         image={bulkOrder}
         isRight

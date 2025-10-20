@@ -47,10 +47,12 @@ const useOrderDetailScreen = ({ navigate }, { params }) => {
     })
       .fetch('GET', url)
       .then(res => {
+        successMessage('File dwonloading start....');
         console.log('File downloaded to:', res.path());
       })
       .catch(err => {
         console.log('Download error:', err);
+        errorMessage('Error on file dwonloading....');
       });
   }
 

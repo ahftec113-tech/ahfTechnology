@@ -3,7 +3,7 @@ import React, { memo } from 'react';
 import useOrderListDetailScreen from './useOrderListDetailScreen';
 import { HeaderComponent } from '../../Components/HeaderComp';
 import { Touchable } from '../../Components/Touchable';
-import { trash } from '../../Assets';
+import { logIcon, trash } from '../../Assets';
 import { styles } from './styles';
 
 const OrderListDetailScreen = ({ navigation, route }) => {
@@ -55,13 +55,27 @@ const OrderListDetailScreen = ({ navigation, route }) => {
                   }}
                 >
                   <Image
-                    source={trash}
+                    source={logIcon}
                     resizeMode="contain"
                     style={styles.logIcon}
                   />
                 </Touchable>
               ) : key === 'O.Code' ? (
-                <Text style={styles.codeValue}>
+                <Text
+                  style={styles.codeValue}
+                  onPress={() => {
+                    //  if (isDate)
+                    //         navigation.navigate(
+                    //           'POIDDetailsScreen',
+                    //           order?.id,
+                    //         );
+                    // else
+                    navigation.navigate('OrderDetailScreen', {
+                      oCode: order?.OCode,
+                      orderId: order?.order_id,
+                    });
+                  }}
+                >
                   {order[key.replace('.', '')] || ''}
                 </Text>
               ) : (
