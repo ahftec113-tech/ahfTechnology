@@ -369,7 +369,7 @@ const usePostIssueFormScreen = ({ navigate }, { params }) => {
           Array.isArray(data?.data) &&
           data?.data?.map(res => ({
             Order: res?.order_code,
-            Address: res?.addressF,
+            Address: `${res?.full_name}, ${res?.addressF}`,
             Style: res?.style,
             Color: res?.color,
             Size: res?.size,

@@ -95,7 +95,7 @@ const PostIssueFormScreen = ({ navigation, route }) => {
                 order[key] != null && (
                   <View key={idx} style={styles.totalsRow}>
                     <Text style={styles.totalsText}>{key}</Text>
-                    <Text style={styles.totalsValue} numberOfLines={2}>
+                    <Text style={styles.totalsValue} numberOfLines={5}>
                       {order[key] || ''}
                     </Text>
                   </View>

@@ -295,7 +295,7 @@ const FormDisplayScreen = ({ navigation }) => {
             <View>
               <TextComponent text={''} fade styles={styles.centerText} />
               <ThemeButton
-                title={'Done'}
+                title={'Search'}
                 style={styles.doneButton}
                 isTheme
                 onPress={onSearch}

@@ -9,7 +9,7 @@ import API, { formDataFunc } from '../../Utils/helperFunc';
 import { AuthUrl } from '../../Utils/Urls';
 import { PermissionsAndroid, Platform } from 'react-native';
 
-const useChatScreen = ({ params }) => {
+const useChatScreen = ({ params }, { goBack }) => {
   console.log('klsdbvklbsdklbvklsdbklvds', params);
   const { getState } = useReduxStore();
   const { userData, token } = getState('Auth');
@@ -348,9 +348,11 @@ const useChatScreen = ({ params }) => {
         AUserID: userData,
         mbl_api: 'mbl_api_userLoginIDC',
       });
+
       mutate({
         rqst_ke_fntn_vl: 'issue_forum_board_msg_show_by_id',
       });
+      if (type == 'parent') goBack();
     },
   };
 };

@@ -103,6 +103,8 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: hp('1.5'),
     color: '#1e293b',
+    width: wp('50'),
+    textAlign: 'right',
   },
 
   // Special for clickable Code

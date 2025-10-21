@@ -71,6 +71,7 @@ const BtnModalComponent = ({
           item.name ||
           item?.supplier_name ||
           item?.val ||
+          item?.label ||
           ''
         ).toUpperCase();
         const textData = text.toUpperCase();

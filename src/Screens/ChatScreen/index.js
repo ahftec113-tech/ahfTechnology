@@ -52,7 +52,7 @@ const ChatScreen = ({ route, navigation }) => {
     deleteChat,
     postMeg,
     handleCameraPick,
-  } = useChatScreen(route);
+  } = useChatScreen(route, navigation);
 
   const OrderCard = () => {
     const source = {
