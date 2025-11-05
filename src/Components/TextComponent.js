@@ -17,6 +17,7 @@ export const TextComponent = ({
   size,
   isDarkFade,
   family,
+  disabled,
 }) => {
   return (
     <Text
@@ -24,6 +25,7 @@ export const TextComponent = ({
       numberOfLines={numberOfLines}
       android_disableSound={true}
       suppressHighlighting={true} // This is specifically for iOS but might help
+      disabled={disabled}
       style={{
         color: fade
           ? Colors.textGray

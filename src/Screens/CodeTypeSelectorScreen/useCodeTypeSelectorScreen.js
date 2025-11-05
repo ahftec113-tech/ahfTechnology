@@ -18,7 +18,7 @@ const useCodeTypeSelectorScreen = ({ navigate }, { params }) => {
         onPress: () =>
           NavigationService.navigate('TypeCodeScreen', {
             type: 'order_code',
-            title: title[params?.moduleType],
+            title: 'Order Code',
           }),
       },
       {
@@ -28,7 +28,7 @@ const useCodeTypeSelectorScreen = ({ navigate }, { params }) => {
         onPress: () =>
           NavigationService.navigate('TypeCodeScreen', {
             type: 'purchase_order_id',
-            title: title[params?.moduleType],
+            title: 'Purchase Order',
           }),
       },
     ],

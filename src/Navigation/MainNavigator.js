@@ -42,7 +42,18 @@ function MainNavigator() {
         )}
         {isLogin && (
           <>
-            <Stack.Screen name="HomeScreen" component={Screens.HomeScreen} />
+            <Stack.Screen
+              name="LeadFilterScreen"
+              component={Screens.LeadFilterScreen}
+            />
+            <Stack.Screen
+              name="LeadListScreen"
+              component={Screens.LeadListScreen}
+            />
+            <Stack.Screen
+              name="DashboardScreen"
+              component={Screens.DashboardScreen}
+            />
             <Stack.Screen
               name="CodeTypeSelectorScreen"
               component={Screens.CodeTypeSelectorScreen}

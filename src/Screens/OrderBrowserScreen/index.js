@@ -200,7 +200,10 @@ const OrderBrowserScreen = ({ navigation }) => {
         textStyle={styles.bulkOrderText}
         imageStyle={styles.bulkOrderImage}
         onPress={() =>
-          navigation.navigate('TypeCodeScreen', { isDateSelector: true })
+          navigation.navigate('TypeCodeScreen', {
+            isDateSelector: true,
+            title: 'Order Date',
+          })
         }
       />
       {/* <ThemeButton

@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Image,
   Linking,
+  Pressable,
 } from 'react-native';
 import useChatScreen from './useChatScreen';
 import { styles } from './styles';
@@ -153,6 +154,12 @@ const ChatScreen = ({ route, navigation }) => {
           />
         ) : (
           <TextComponent
+            onPress={() =>
+              Linking.openURL(apiAllData?.BoardMessage?.custom_field_1)
+            }
+            disabled={
+              !Boolean(apiAllData?.BoardMessage?.custom_field_1 != null)
+            }
             text={apiAllData?.BoardMessage?.message}
             size={'1.5'}
             isThemeColor

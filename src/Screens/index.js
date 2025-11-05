@@ -26,5 +26,8 @@ export { default as ListTableScreen } from './ListTableScreen';
 export { default as FormDisplayScreen } from './FormDisplayScreen';
 export { default as ChatScreen } from './ChatScreen';
 export { default as PostIssueFormScreen } from './PostIssueFormScreen';
+export { default as DashboardScreen } from './DashboardScreen';
+export { default as LeadListScreen } from './LeadListScreen';
+export { default as LeadFilterScreen } from './LeadFilterScreen';
 
 export { default as ListViewScreen } from '../Components/ListViewComp';

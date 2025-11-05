@@ -1,4 +1,4 @@
-package com.afhtechnology
+package com.sahfGroups
 
 import android.app.Application
 import com.facebook.react.PackageList

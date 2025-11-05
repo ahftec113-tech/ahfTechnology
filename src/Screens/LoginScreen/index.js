@@ -1,29 +1,15 @@
 import React, { memo, useState } from 'react';
-import { View, Image, ImageBackground, Platform, Text } from 'react-native';
+import { View, Image, ImageBackground } from 'react-native';
 import { TextComponent } from '../../Components/TextComponent';
 import { styles } from './styles';
 import ThemeButton from '../../Components/ThemeButton';
-import {
-  afhLogo,
-  apple,
-  facebook,
-  google,
-  homeIcon,
-  lock,
-  locksetting,
-  logoImg,
-  sms,
-  tickemp,
-  tickfill,
-} from '../../Assets';
+import { afhLogo } from '../../Assets';
 import { InputComponent } from '../../Components/InputComponent';
 import useLogin from './useLoginScreen';
 import KeyBoardWrapper from '../../Components/KeyBoardWrapper';
 import { LoginBg } from '../../Assets';
 import { hp, wp } from '../../Hooks/useResponsive';
 import { HeaderComponent } from '../../Components/HeaderComp';
-import SocialBottomComp from '../../Components/SocialBottomComp';
-import { Touchable } from '../../Components/Touchable';
 
 const LoginScreen = ({ navigation }) => {
   const [check, setCheck] = useState();
